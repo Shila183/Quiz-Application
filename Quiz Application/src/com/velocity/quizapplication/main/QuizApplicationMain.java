@@ -2,11 +2,16 @@ package com.velocity.quizapplication.main;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
+import com.velocity.admin.quizapplication.AdminOperationsImpl;
 import com.velocity.student.quizapplication.DatabaseConnectionImpl;
+import com.velocity.student.quizapplication.DisplayOfStudentResultImpl;
 import com.velocity.student.quizapplication.QuestionHandlingImpl;
+import com.velocity.student.quizapplication.StudentLoginImpl;
 
 public class QuizApplicationMain {
 
@@ -21,7 +26,8 @@ public class QuizApplicationMain {
 		System.out.println("Option 6 - Display all students score as per ascending order");// Kunal
 		System.out.println("Option 7 - Fetch student score by using id"); //Vipul
 		System.out.println("Option 8 - Add question with 4 options into database"); //Vipul
-		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 
 		System.out.println("Enter your choice:");
 		int choice = scanner.nextInt();
@@ -34,11 +40,12 @@ public class QuizApplicationMain {
 
 		case 2:
 			System.out.println("Your selected Student Login");
-			
+			StudentLoginImpl.studentlogin();
 			break;
 			
 		case 3:
 			System.out.println("Student Registration");
+	
 			break;
 			
 		case 4:
@@ -54,12 +61,13 @@ public class QuizApplicationMain {
 			break;
 			
 		case 7:
-			System.out.println("Student Registration");
+			System.out.println("You have selected option 7");
+			AdminOperationsImpl.getStudentResultbyId();
 			break;
 			
 		case 8:
-			System.out.println("Student Registration");
-			getQuestion();
+			System.out.println("You have selected option 8");
+			AdminOperationsImpl.addQuestion();
 			break;
 			
 		default :
@@ -69,36 +77,4 @@ public class QuizApplicationMain {
 
 	}
 
-	public static void getQuestion() {
-		Scanner scanner = new Scanner(System.in);
-		
-		for (int i=0; i<=3;i++) {
-		
-			System.out.println("Enter question:");
-			String question = scanner.nextLine();
-			
-			System.out.println("Enter option a:");
-			String option_a = scanner.nextLine();
-
-			System.out.println("Enter option b:");
-			String option_b = scanner.nextLine();
-
-			System.out.println("Enter option c:");
-			String option_c = scanner.nextLine();
-
-			System.out.println("Enter option d:");
-			String option_d = scanner.nextLine();
-
-			System.out.println("Enter correct answer:");
-			String answer = scanner.nextLine();
-
-			System.out.println("Enter marks:");
-			int marks = scanner.nextInt();
-
-			QuestionHandlingImpl questionHandlingImpl = new QuestionHandlingImpl();
-			questionHandlingImpl.addQuestion(question, option_a, option_b, option_c, option_d, answer, marks);
-			System.out.println("Data inserted successfully");
-
-		}
-	}
 }
