@@ -1,0 +1,9 @@
+package com.velocity.student.quizapplication;
+
+import java.sql.Connection;
+
+public interface DatabaseConnection {
+
+	public Connection databaseConnectivity();
+	
+}

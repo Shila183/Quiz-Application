@@ -1,0 +1,55 @@
+package com.velocity.student.quizapplication;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class DatabaseConnectionImpl implements DatabaseConnection {
+
+	final String DB_Driver_Name = "oracle.jdbc.driver.OracleDriver";
+	final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	final String USERNAME = "system";
+	final String PASSWORD = "system";
+	Connection con = null;
+	PreparedStatement ps=null;
+
+	@Override
+	public Connection databaseConnectivity() throws SQLException {
+		
+		try {
+			Class.forName(DB_Driver_Name);
+			con = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+			
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+
+		return con;
+	}
+	
+
+	@Override
+	public void addQuestion() {
+		try {
+			ps=con.prepareStatement
+				("insert into question(question,option_a,option_b,option_c,option_d,answer,marks)value(?,?,?,?,?,?,?)");
+			ps.setString(1,"Which of the following option leads to the portability and security of Java?");
+			ps.setString(2, "Bytecode is executed by JVM");
+			ps.setString(3, "The applet makes the Java code secure and portable");
+			ps.setString(4, "Use of exception handling");
+			ps.setString(5, "Dynamic binding between objects");
+			ps.setString(6, "a");
+			ps.setInt(7, 1);
+		
+			ps.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	
+}
