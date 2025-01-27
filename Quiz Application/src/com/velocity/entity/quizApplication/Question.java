@@ -1,7 +1,7 @@
-package com.velocity.student.quizapplication;
+package com.velocity.entity.quizApplication;
 
 public class Question {
-	
+
 	private String question;
 	private String option_a;
 	private String option_b;
@@ -9,7 +9,7 @@ public class Question {
 	private String option_d;
 	private String correctAnswer;
 	private int marks;
-	
+
 	public Question(String question, String option_a, String option_b, String option_c, String option_d,
 			String correctAnswer, int marks) {
 		super();
@@ -21,25 +21,31 @@ public class Question {
 		this.correctAnswer = correctAnswer;
 		this.marks = marks;
 	}
-	
+
 	public String getQuestion() {
 		return question;
 	}
+
 	public String getOption_a() {
 		return option_a;
 	}
+
 	public String getOption_b() {
 		return option_b;
 	}
+
 	public String getOption_c() {
 		return option_c;
 	}
+
 	public String getOption_d() {
 		return option_d;
 	}
+
 	public String getCorrectAnswer() {
 		return correctAnswer;
 	}
+
 	public int getMarks() {
 		return marks;
 	}

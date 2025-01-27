@@ -1,6 +1,7 @@
 package com.velocity.student.quizapplication;
 
-public interface StudentRegistration {
+import com.velocity.entity.quizApplication.Student;
 
-	public void addStudentRegistration();
+public interface StudentRegistration {
+	public void addStudentRegistration(Student student);
 }

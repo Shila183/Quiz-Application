@@ -1,29 +1,44 @@
 package com.velocity.quizapplication.main;
 
-import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserChoice {
-	
-	public static void main(String[] args) {
-		
-		Scanner sc =new Scanner(System.in);
-		
-		System.out.println("Enter Question");
-		String question =sc.next();
-		
-		System.out.println("Enter Option_a");
-		String Option_a =sc.next();
-		
-		System.out.println("Enter Option_b");
-		String Option_b =sc.next();
-		
-		System.out.println("Enter Option_c");
-		String Option_c =sc.next();
-		
-		System.out.println("Enter Option_d");
-		String Option_d =sc.next();
-		
-		sc.close();
-	}
+import com.velocity.database.quizApplication.DatabaseConnectionImpl;
+
+public class Userchoice {
+
+
+		static int id=101;
+		public static void main(String[] args) {
+			
+			DatabaseConnectionImpl databaseConnectionImpl = new DatabaseConnectionImpl();
+			Connection con = null;
+			try {
+				con = databaseConnectionImpl.databaseConnectivity();
+
+				PreparedStatement ps = con.prepareStatement("select * from student");
+				ResultSet rs = ps.executeQuery();
+				List<Integer> listOfId=new ArrayList<Integer>();
+				while(rs.next()) {
+					listOfId.add(rs.getInt(1));
+				}
+				boolean value=true;
+				while(value) {
+					if(listOfId.contains(id)) {
+						id++;
+						value=true;
+					}else {
+						// data insert
+						value=false;
+					}
+				}	
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
 }
- 
+

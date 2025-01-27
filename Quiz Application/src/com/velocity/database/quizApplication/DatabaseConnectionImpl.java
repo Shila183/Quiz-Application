@@ -1,8 +1,7 @@
-package com.velocity.student.quizapplication;
+package com.velocity.database.quizApplication;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DatabaseConnectionImpl implements DatabaseConnection {
@@ -15,11 +14,11 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
 
 	@Override
 	public Connection databaseConnectivity() throws SQLException {
-		
+
 		try {
 			Class.forName(DB_Driver_Name);
 			con = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
+
 		} catch (ClassNotFoundException e) {
 
 			e.printStackTrace();
@@ -27,8 +26,5 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
 
 		return con;
 	}
-	
 
-	
-	
 }

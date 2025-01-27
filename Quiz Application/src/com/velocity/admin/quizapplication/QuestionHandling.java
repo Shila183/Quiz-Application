@@ -1,4 +1,4 @@
-package com.velocity.student.quizapplication;
+package com.velocity.admin.quizapplication;
 
 public interface QuestionHandling {
 	

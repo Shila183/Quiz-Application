@@ -1,8 +1,10 @@
-package com.velocity.student.quizapplication;
-
+package com.velocity.admin.quizapplication;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import com.velocity.database.quizApplication.DatabaseConnectionImpl;
+import com.velocity.entity.quizApplication.Question;
 
 public class QuestionHandlingImpl implements QuestionHandling {
 	
