@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="com/velocity/student/quizapplication/UserChoice.java" kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/DELL/Downloads/jdbc-oracle.jar"/>
+	<classpathentry kind="lib" path="F:/Notes/JDBC/jdbc-oracle.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
