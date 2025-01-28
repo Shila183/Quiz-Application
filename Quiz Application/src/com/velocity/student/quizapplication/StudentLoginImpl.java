@@ -18,8 +18,6 @@ public class StudentLoginImpl {
 
 	public static void studentlogin() {
 
-		;
-
 		DatabaseConnectionImpl db = new DatabaseConnectionImpl();
 
 		Connection con = null;
@@ -53,7 +51,11 @@ public class StudentLoginImpl {
 				doq.displayOfQuestions(uname, student_id, student_firstname, student_lastname);
 
 			} else {
-				System.out.println("Access is denied for Admin");
+				try {
+					throw new InvalidInputException("\nAccess is denied for Admin");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 
 			con.close();
@@ -81,21 +83,31 @@ public class StudentLoginImpl {
 
 				if (username.equals(user_name_from_db) && Password.equals(user_password_from_db)) {
 
-					if (user_role_from_db.equals("Admin")) {
+					if (user_role_from_db.equalsIgnoreCase("Admin")) {
 
 						result = "Admin";
 						iscredIdFound = true;
 
-					} else {
+					} else if(user_role_from_db.equalsIgnoreCase("student")){
 						result = "student";
 						iscredIdFound = true;
+					}else {
+						try {
+							throw new InvalidInputException("\nInvalid login....");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+						}
 					}
 
 				}
 			}
 
 			if (!iscredIdFound) {
-				System.out.println("You entered Wrong cred or password");
+				try {
+					throw new InvalidInputException("\nYou entered Wrong cred or password");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 
 		} catch (SQLException e) {

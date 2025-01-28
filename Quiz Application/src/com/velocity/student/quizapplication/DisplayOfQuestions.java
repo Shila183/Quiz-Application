@@ -22,7 +22,7 @@ public class DisplayOfQuestions {
 		try {
 			con = databaseConnectionImpl.databaseConnectivity();
 			PreparedStatement ps = con
-					.prepareStatement("select question,option_a,option_b,option_c,option_d,answer,marks from question");
+					.prepareStatement("select*from(select question,option_a,option_b,option_c,option_d,answer,marks from question order by dbms_random.random) where  rownum<=10;");
 			ResultSet rs = ps.executeQuery();
 			System.out.println("\n----------~ Best Luck for the Quiz, " + student_firstname + " " + student_lastname
 					+ "!! ~----------");

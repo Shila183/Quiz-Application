@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 import com.velocity.database.quizApplication.DatabaseConnectionImpl;
+import com.velocity.student.quizapplication.InvalidInputException;
 import com.velocity.student.quizapplication.StudentLoginImpl;
 
 public class AdminOperationsImpl {
@@ -31,7 +32,7 @@ public class AdminOperationsImpl {
 		}
 	}
 	
-	public static void getStudentResult() {
+	public static void getStudentResult() throws SQLException {
 		System.out.println("Enter User Name");
 		String user_name_from_user=scanner.next();
 		System.out.println("Enter Password");
@@ -85,11 +86,12 @@ public class AdminOperationsImpl {
 	
 
 	public static void fetchStudentScore(int student_id) {
-
+		Statement stmt=null;
+		ResultSet rs=null;
 		try {
 			con = databaseConnectionImpl.databaseConnectivity();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from STUDENT_RESULT");
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("select * from STUDENT_RESULT");
 			boolean isIdFound = false;
 			
 			while (rs.next()) {
@@ -103,25 +105,37 @@ public class AdminOperationsImpl {
 				System.out.println("Score is>> " + sdtScore);
 				isIdFound = true;
 				break;
-				} 
+				}
 			}
 			
 			if (!isIdFound) { 
-		           System.out.println("You entered an invalid ID");
+				try {
+					throw new InvalidInputException("\n\"You entered an invalid ID\"");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 		        }
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {		
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
 		}
 
 	};
 	//Choice 6 method
-	public static void fetchStudentScoreall() {
+	public static void fetchStudentScoreall() throws SQLException{
 
 		try {
 			con = databaseConnectionImpl.databaseConnectivity();
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from STUDENT_RESULT order by Student_score ASC");
-			//boolean isIdFound = false;
 			
 			while (rs.next()) {
 				
@@ -135,10 +149,15 @@ public class AdminOperationsImpl {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	};
-	
+			   System.err.println("An unexpected exception occurred: " + e.getMessage());
+		        e.printStackTrace();
+		}finally {
+	        try {
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
 	
 }

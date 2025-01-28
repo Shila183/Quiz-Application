@@ -1,5 +1,6 @@
 package com.velocity.quizapplication.main;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 import com.velocity.admin.quizapplication.AdminOperationsImpl;
 import com.velocity.student.quizapplication.DisplayOfStudentResultImpl;
@@ -7,10 +8,13 @@ import com.velocity.student.quizapplication.StudentLoginImpl;
 import com.velocity.student.quizapplication.StudentRegistrationImpl;
 
 public class QuizApplicationMain {
-
+	static {
+		System.out.println("************* WELCOME TO QUIZ *************\n");
+	}
+	
 	static Scanner scanner = new Scanner(System.in);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		System.out.println("option 1- Student Registration"); // Shubham
 		System.out.println("Option 2 - Student Login"); //// Shubham
@@ -20,7 +24,7 @@ public class QuizApplicationMain {
 		System.out.println("Option 6 - Display all students score as per ascending order");// Kunal
 		System.out.println("Option 7 - Fetch student score by using id"); // Vipul
 		System.out.println("Option 8 - Add question with 4 options into database"); // Vipul
-
+		System.out.println("\n--------------------------------------------------------------------------------\n");
 		System.out.println("Enter your choice:");
 		int choice = scanner.nextInt();
 
