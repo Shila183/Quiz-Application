@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import com.velocity.database.quizApplication.DatabaseConnectionImpl;
 
 public class DisplayOfQuestions {
@@ -22,11 +21,11 @@ public class DisplayOfQuestions {
 		Connection con = null;
 		try {
 			con = databaseConnectionImpl.databaseConnectivity();
-
 			PreparedStatement ps = con
 					.prepareStatement("select question,option_a,option_b,option_c,option_d,answer,marks from question");
 			ResultSet rs = ps.executeQuery();
-
+			System.out.println("\n----------~ Best Luck for the Quiz, " + student_firstname + " " + student_lastname
+					+ "!! ~----------");
 			while (rs.next()) {
 				System.out.println("\n" + "Question: " + rs.getString(1));
 				System.out.println("Marks: " + rs.getString(7));
@@ -39,15 +38,12 @@ public class DisplayOfQuestions {
 				boolean value = true;
 
 				while (value == true) {
-
 					System.out.println("Enter correct answer: ");
 					String answer = scanner.next();
 
 					if (answer.equals("a") || answer.equals("b") || answer.equals("c") || answer.equals("d")) {
 						if (correctAnswer.equals(answer)) {
-
 							score++;
-
 						}
 						value = false;
 					} else {
@@ -59,7 +55,7 @@ public class DisplayOfQuestions {
 						value = true;
 					}
 				}
-
+				
 			}
 			setScoreInDB(score, stud_username, student_id, student_firstname, student_lastname);
 			con.close();
@@ -78,21 +74,40 @@ public class DisplayOfQuestions {
 
 		DatabaseConnectionImpl databaseConnectionImpl = new DatabaseConnectionImpl();
 		Connection con = null;
+		String usernameAvailability = null;
 		try {
 			con = databaseConnectionImpl.databaseConnectivity();
-			PreparedStatement ps = con.prepareStatement(
-					"insert into student_result (student_username,student_score,student_id,student_firstname,student_lastname) values(?,?,?,?,?)");
+			PreparedStatement selectOperation = con
+					.prepareStatement("select * from student_result where student_username = ?");
+			selectOperation.setString(1, stud_username);
+			ResultSet rs = selectOperation.executeQuery();
 
-			ps.setString(1, stud_username);
-			ps.setInt(2, scoreOfStudent);
-			ps.setInt(3, student_id);
-			ps.setString(4, student_firstname);
-			ps.setString(5, student_lastname);
+			if (rs.next()) {
+				usernameAvailability = rs.getString("student_username");
+				if (stud_username.equals(usernameAvailability)) {
+					PreparedStatement updateOperation = con
+							.prepareStatement("update student_result set student_score=? where student_username=?");
+					updateOperation.setInt(1, scoreOfStudent);
+					updateOperation.setString(2, stud_username);
+					updateOperation.executeQuery();
+					updateOperation.close();
+				}
+			} else {
+				PreparedStatement insertOperation = con.prepareStatement(
+						"insert into student_result (student_username,student_score,student_id,student_firstname,student_lastname) values(?,?,?,?,?)");
 
-			int i = ps.executeUpdate();
-			System.out.println("Data is inserted into student_result......" + i);
+				insertOperation.setString(1, stud_username);
+				insertOperation.setInt(2, scoreOfStudent);
+				insertOperation.setInt(3, student_id);
+				insertOperation.setString(4, student_firstname);
+				insertOperation.setString(5, student_lastname);
+				insertOperation.executeUpdate();
+				System.out.println("xbx");
+			}
 			con.close();
-			ps.close();
+			selectOperation.close();
+			System.out.println("\nThanks for attempting the quiz, " + stud_username + ".....!!!\n"
+					+ "Please login again to see the achieved score");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
