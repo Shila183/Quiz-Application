@@ -102,7 +102,6 @@ public class DisplayOfQuestions {
 				insertOperation.setString(4, student_firstname);
 				insertOperation.setString(5, student_lastname);
 				insertOperation.executeUpdate();
-				System.out.println("xbx");
 			}
 			con.close();
 			selectOperation.close();
